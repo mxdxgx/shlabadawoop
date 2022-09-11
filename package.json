@@ -1,6 +1,6 @@
 {
   "name": "shlabadawoop",
-  "version": "1.0.0",
+  "version": "1.5.0",
   "description": "shlabadawoop node.js api written in typescript for sheer, unlimited joy",
   "scripts": {
     "clean": "rimraf dist",
