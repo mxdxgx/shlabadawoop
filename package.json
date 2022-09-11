@@ -6,6 +6,7 @@
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
     "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\"",
     "pretest": "npm run build",
     "test": ".\\node_modules\\.bin\\mocha --timeouts=15000 --compilers ts:ts-node/register .\\src\\**\\*.spec.ts",
     "debug": ".\\node_modules\\.bin\\nodemon",

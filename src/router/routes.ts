@@ -1,5 +1,5 @@
-import * as express from "express";
-import { RESOURCES_ROUTES } from "./resources.route";
+import * as express from 'express';
+import { RESOURCES_ROUTES } from './resources.route';
 
 export class RoutesBuilder {
   public router: express.Router = express.Router();
@@ -8,7 +8,7 @@ export class RoutesBuilder {
       this.router[route.method](
         route.routeParams.route,
         route.routeParams.middlewares,
-        route.routeParams.handler
+        route.routeParams.handler,
       );
     }
   }

@@ -1,11 +1,11 @@
-import * as express from "express";
-import * as pinoExpress from "express-pino-logger";
-import * as pino from "pino";
-import { RoutesBuilder } from "../router/routes";
+import * as express from 'express';
+import * as pinoExpress from 'express-pino-logger';
+import * as pino from 'pino';
+import { RoutesBuilder } from '../router/routes';
 
 const logger: pino.Logger = pino({
-  level: process.env.LOG_LEVEL || "info",
-  prettyPrint: process.env.NODE_ENV === "development",
+  level: process.env.LOG_LEVEL || 'info',
+  prettyPrint: process.env.NODE_ENV === 'development',
 });
 
 const appLogger: pinoExpress.HttpLogger = pinoExpress({ logger });

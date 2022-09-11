@@ -1,5 +1,5 @@
-import { HttpMethod } from "../http/http";
-import { IRouteParams } from "./router.params";
+import { HttpMethod } from '../http/http';
+import { IRouteParams } from './router.params';
 
 export class ReadResourceRoute {
   public method: string;
