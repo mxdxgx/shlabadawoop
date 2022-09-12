@@ -1,6 +1,6 @@
-import { logger } from './../server/server';
 import * as express from 'express';
 import { configs } from '../../config/configs';
+import { logger } from './../server/server';
 
 export class BaseController {
   public async getAll(
