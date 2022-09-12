@@ -1,0 +1,15 @@
+{
+  "check-coverage": true,
+  "per-file": false,
+  "lines": 90,
+  "statements": 90,
+  "functions": 90,
+  "branches": 90,
+  "include": ["src/**/*.ts", "dist/**/*.js"],
+  "all": true,
+  "exclude": ["src/**/*.spec.ts", "dist/**/*.spec.js"],
+  "reporter": ["text", "lcov"],
+  "cache": true,
+  "temp-directory": "./coverage/nycrc",
+  "exclude-after-remap": false
+}

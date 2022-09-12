@@ -12,7 +12,7 @@ It is focused on the back-end side of things, but you do whatever you want, that
 
 ## todos :
 
-- Add **unit testing coverage** support
+- ~~Add **unit testing coverage** support~~
 - Add proper **Dockerfile** support
 - Add proper **CI** support
 - Add proper **JWT verification** support

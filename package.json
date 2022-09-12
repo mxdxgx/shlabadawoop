@@ -8,7 +8,7 @@
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "pretest": "npm run build",
-    "test": ".\\node_modules\\.bin\\mocha --timeouts=15000 --compilers ts:ts-node/register .\\src\\**\\*.spec.ts",
+    "test": ".\\node_modules\\.bin\\nyc .\\node_modules\\.bin\\mocha --timeouts=15000 --compilers ts:ts-node/register .\\src\\**\\*.spec.ts",
     "start": "node dist/src/server/server.js",
     "start:dev": ".\\node_modules\\.bin\\nodemon",
     "prepare": "husky install"
@@ -35,6 +35,7 @@
     "mocha": "^5.2.0",
     "nock": "^9.4.2",
     "nodemon": "^2.0.19",
+    "nyc": "^15.1.0",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "ts-node": "^10.9.1"
