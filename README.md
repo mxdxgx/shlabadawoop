@@ -8,7 +8,7 @@ It is focused on the back-end side of things, but you do whatever you want, that
 
 ## Version
 
-**1.5.0**
+**1.5.1**
 
 ## todos :
 

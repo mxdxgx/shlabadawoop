@@ -1,5 +1,5 @@
 api:
-  version: "0.0.1-local"
+  version: "1.5.1-local"
 typeorm: 
   type: "postgres" 
   host: "localhost"
