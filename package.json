@@ -12,7 +12,9 @@
     "test:win32": ".\\node_modules\\.bin\\nyc .\\node_modules\\.bin\\mocha --timeouts=15000 --require ts-node/register .\\src\\**\\*.spec.ts",
     "test:darwin:linux": "./node_modules/.bin/nyc ./node_modules/.bin/mocha --timeouts=15000 --require ts-node/register ./src/**/*.spec.ts",
     "start": "node dist/src/server/server.js",
-    "start:dev": ".\\node_modules\\.bin\\nodemon",
+    "start:dev": "run-script-os",
+    "start:dev:win32": ".\\node_modules\\.bin\\nodemon",
+    "start:dev:darwin:linux": "./node_modules/.bin/nodemon",
     "prepare": "husky install"
   },
   "author": "Maxime G",
