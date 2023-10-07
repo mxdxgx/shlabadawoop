@@ -1,4 +1,7 @@
-import { BaseExpressFunction, ExpressHandler } from '../handlers/default.handlers';
+import {
+  BaseExpressFunction,
+  ExpressHandler,
+} from '../handlers/default.handlers';
 
 export interface IRouteParams {
   middlewares?: BaseExpressFunction[];
