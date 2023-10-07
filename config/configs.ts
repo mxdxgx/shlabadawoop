@@ -1,25 +1,25 @@
-import * as config from "config";
-import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
+import * as config from 'config';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 export class Configuration {
-    private readonly apiVersion: string;
-    private readonly ormConfig: PostgresConnectionOptions;
+  private readonly apiVersion: string;
 
-    constructor() {
-        this.apiVersion = <string>config.get("api.version");
-        this.ormConfig = <PostgresConnectionOptions>config.get('typeorm');
-    }
+  private readonly ormConfig: PostgresConnectionOptions;
 
-    get api(): any {
-        return {
-            version: this.apiVersion,
-        };
-    }
+  constructor() {
+    this.apiVersion = <string>config.get('api.version');
+    this.ormConfig = <PostgresConnectionOptions>config.get('typeorm');
+  }
 
-    get typeOrm(): PostgresConnectionOptions {
-        return this.ormConfig;
-    }
+  get api(): unknown {
+    return {
+      version: this.apiVersion,
+    };
+  }
+
+  get typeOrm(): PostgresConnectionOptions {
+    return this.ormConfig;
+  }
 }
 
-export let configs: Configuration = new Configuration();
-
+export const configs: Configuration = new Configuration();
