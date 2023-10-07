@@ -5,4 +5,4 @@ WORKDIR /opt/app
 
 RUN npm install --no-cache 
 
-CMD ["node", "--inspect=0.0.0.0:9229", "dist/src/server/server.js"]
+CMD ["npm","run", "start-remote"]

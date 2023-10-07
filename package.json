@@ -12,6 +12,7 @@
     "test:win32": ".\\node_modules\\.bin\\nyc .\\node_modules\\.bin\\mocha --timeouts=15000 --require ts-node/register .\\src\\**\\*.spec.ts",
     "test:darwin:linux": "./node_modules/.bin/nyc ./node_modules/.bin/mocha --timeouts=15000 --require ts-node/register ./src/**/*.spec.ts",
     "start": "node dist/src/server/server.js",
+    "start-remote": "node --inspect=0.0.0.0:9229 dist/src/server/server.js",
     "start:dev": "run-script-os",
     "start:dev:win32": ".\\node_modules\\.bin\\nodemon",
     "start:dev:darwin:linux": "./node_modules/.bin/nodemon",
@@ -51,6 +52,7 @@
     "express-winston": "^4.2.0",
     "js-yaml": "^4.1.0",
     "pg": "^8.11.3",
+    "sqlite3": "^5.1.6",
     "typeorm": "^0.3.17",
     "typescript": "^5.2.2",
     "winston": "^3.10.0"
