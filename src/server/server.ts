@@ -3,6 +3,8 @@ import * as expressWinston from 'express-winston';
 import * as winston from 'winston';
 import { RoutesBuilder } from '../router/routes';
 
+import 'reflect-metadata';
+
 /**
  * create & configure server
  */
