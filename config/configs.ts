@@ -6,9 +6,20 @@ export class Configuration {
 
   private readonly ormConfig: PostgresConnectionOptions;
 
+  private readonly jwksUri: string;
+
   constructor() {
     this.apiVersion = <string>config.get('api.version');
     this.ormConfig = <PostgresConnectionOptions>config.get('typeorm');
+    this.jwksUri = <string>config.get('auth.wellKnown.jwksUri');
+  }
+
+  get auth(): unknown {
+    return {
+      wellKnown: {
+        jwksUri: this.jwksUri,
+      },
+    };
   }
 
   get api(): unknown {

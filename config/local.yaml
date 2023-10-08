@@ -1,8 +1,13 @@
 api:
-  version: "1.5.1-local"
+  version: '1.5.1-local'
+
+auth:
+  wellKnown:
+    jwksUri: 'someJwksUri'
+
 typeorm:
-  type: "postgres"
-  host: "localhost"
+  type: 'postgres'
+  host: 'localhost'
   port: 5432
   username: 'postgres'
   password: 'secret'

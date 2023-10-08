@@ -1,6 +1,10 @@
 api:
   version: "1.5.1"
 
+auth:
+  wellKnown:
+    jwksUri: "someJwksUri"
+
 typeorm:
   type: "postgres"
   host: "localhost"
