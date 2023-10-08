@@ -3,6 +3,9 @@ api:
 
 auth:
   activated: false
+  validate:
+    audience: 'aud-shlabadawoop'
+    issuer: 'iss-shlabadawoop'
   wellKnown:
     jwksUri: 'someJwksUri'
 

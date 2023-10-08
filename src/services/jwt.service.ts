@@ -1,17 +1,31 @@
 import * as jwksclient from 'jwks-rsa';
 import * as jwt from 'jsonwebtoken';
 import { VerifyOptions } from 'jsonwebtoken';
-import { configs } from '../../config/configs';
+import { ConfigValue } from '../../config/decorators/configvalue.decorator';
 
 export class JwtService {
-  private readonly options: VerifyOptions = {
-    audience: configs.auth.validate.audience,
-    issuer: configs.auth.validate.issuer,
-  };
+  @ConfigValue('auth.validate.audience')
+  private audience: string;
 
-  private readonly client = jwksclient({
-    jwksUri: configs.auth.wellKnown.jwksUri,
-  });
+  @ConfigValue('auth.validate.issuer')
+  private issuer: string;
+
+  @ConfigValue('auth.wellKnown.jwksUri')
+  private jwksUri: string;
+
+  private options: VerifyOptions;
+
+  private client;
+
+  constructor() {
+    this.options = {
+      audience: this.audience,
+      issuer: this.issuer,
+    };
+    this.client = jwksclient({
+      jwksUri: this.jwksUri,
+    });
+  }
 
   private getkey(header, callback) {
     this.client.getSigningKey(header.kid, function (err, key) {

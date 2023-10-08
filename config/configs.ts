@@ -7,33 +7,20 @@ export class Configuration {
 
   private readonly ormConfig: PostgresConnectionOptions;
 
-  private readonly jwksUri: string;
-
-  private readonly audience: string;
-
-  private readonly issuer: string;
-
-  private readonly authActivated: boolean;
+  public readonly auth: IAuthToken;
 
   constructor() {
     this.apiVersion = <string>config.get('api.version');
     this.ormConfig = <PostgresConnectionOptions>config.get('typeorm');
 
-    this.jwksUri = <string>config.get('auth.wellKnown.jwksUri');
-    this.audience = <string>config.get('auth.validate.audience');
-    this.issuer = <string>config.get('auth.validate.issuer');
-    this.authActivated = <boolean>config.get('auth.activated');
-  }
-
-  get auth(): IAuthToken {
-    return {
-      activated: this.authActivated,
+    this.auth = {
+      activated: <boolean>config.get('auth.activated'),
       validate: {
-        issuer: this.issuer,
-        audience: this.audience,
+        issuer: <string>config.get('auth.validate.issuer'),
+        audience: <string>config.get('auth.validate.audience'),
       },
       wellKnown: {
-        jwksUri: this.jwksUri,
+        jwksUri: <string>config.get('auth.wellKnown.jwksUri'),
       },
     };
   }
