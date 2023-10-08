@@ -5,5 +5,5 @@
     "NODE_ENV": "development"
   },
   "ignore": ["src/**/*.spec.ts"],
-  "exec": "ts-node ./src/server/server.ts"
+  "exec": "ts-node ./src/start.ts"
 }
