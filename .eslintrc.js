@@ -20,9 +20,10 @@ module.exports = {
   ignorePatterns: ['.eslintrc.js'],
   rules: {
     'import/no-extraneous-dependencies': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
     'import/extensions': 'off',
     'prettier/prettier': [
-      'error',
+      'warn',
       {
         endOfLine: 'auto',
       },

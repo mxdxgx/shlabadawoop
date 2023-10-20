@@ -1,11 +1,7 @@
 api:
-  version: '1.5.1'
+  version: '1.5.1-state1'
 
 auth:
-  activated: false
-  validate:
-    audience: 'aud-shlabadawoop'
-    issuer: 'iss-shlabadawoop'
   wellKnown:
     jwksUri: 'someJwksUri'
 

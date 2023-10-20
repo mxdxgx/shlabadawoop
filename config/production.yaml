@@ -1,2 +1,6 @@
 api:
-  version: "1.5.1-prod"
+  version: '1.5.1-prod'
+
+auth:
+  wellKnown:
+    jwksUri: 'someJwksUri'
