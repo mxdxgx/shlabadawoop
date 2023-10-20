@@ -1,0 +1,20 @@
+api:
+  version: '1.5.1-state1'
+
+auth:
+  wellKnown:
+    jwksUri: 'someJwksUri'
+
+typeorm:
+  type: 'postgres'
+  host: 'localhost'
+  port: 5432
+  username: 'postgres'
+  password: 'secret'
+  database: 'stc-default'
+  synchronize: true
+  logging: false
+  entities:
+    # Add your entities
+    # This is a string array, use class name as value
+    - 'Series'
