@@ -10,6 +10,5 @@ export async function jwtValidatorMiddleware(
     next();
   } else {
     throw new Error('Unauthorized');
-    //throw new UnauthorizedError();
   }
 }
