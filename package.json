@@ -55,9 +55,9 @@
     "js-yaml": "^4.1.0",
     "jsonwebtoken": "^9.0.2",
     "jwks-rsa": "^3.1.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "pg": "^8.11.3",
-    "sqlite3": "^5.1.6",
+    "sqlite3": "^5.1.7",
     "typeorm": "^0.3.17",
     "typescript": "^5.2.2",
     "winston": "^3.10.0"
