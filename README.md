@@ -18,7 +18,8 @@ npm run check
 ```
 
 `npm run check` runs ESLint, strict TypeScript checking, the test suite with
-coverage, and an npm audit that fails on any known vulnerability. The test
+a hard 100% threshold for statements, branches, functions, and lines, and an
+npm audit that fails on any known vulnerability. The test
 command explicitly discovers nested `*.spec.ts` files on every supported
 operating system.
 

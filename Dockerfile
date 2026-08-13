@@ -12,10 +12,12 @@ FROM node:24.13.0-alpine
 ENV NODE_ENV=production
 WORKDIR /opt/app
 
-COPY --from=build /opt/app/node_modules ./node_modules
-COPY --from=build /opt/app/dist ./dist
-COPY --from=build /opt/app/config ./config
-COPY --from=build /opt/app/package.json ./package.json
+COPY --chown=node:node --from=build /opt/app/node_modules ./node_modules
+COPY --chown=node:node --from=build /opt/app/dist ./dist
+COPY --chown=node:node --from=build /opt/app/config ./config
+COPY --chown=node:node --from=build /opt/app/package.json ./package.json
+
+RUN mkdir -p logs && chown node:node logs
 
 USER node
 EXPOSE 3000 9229
