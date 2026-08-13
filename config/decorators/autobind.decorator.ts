@@ -24,7 +24,6 @@ export function boundMethod<T>(
   return {
     configurable: true,
     get(this: T) {
-      // eslint-disable-next-line no-prototype-builtins
       if (
         definingProperty ||
         this === target.prototype ||

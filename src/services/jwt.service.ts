@@ -1,48 +1,58 @@
-import * as jwksclient from 'jwks-rsa';
-import * as jwt from 'jsonwebtoken';
-import { VerifyOptions } from 'jsonwebtoken';
+import jwt, {
+  type GetPublicKeyOrSecret,
+  type JwtHeader,
+  type SigningKeyCallback,
+  type VerifyOptions,
+} from 'jsonwebtoken';
+import jwksClient, { type JwksClient } from 'jwks-rsa';
 import { ConfigValue } from '../../config/decorators/configvalue.decorator';
 
 export class JwtService {
   @ConfigValue('auth.validate.audience')
-  private audience: string;
+  private readonly audience!: string;
 
   @ConfigValue('auth.validate.issuer')
-  private issuer: string;
+  private readonly issuer!: string;
 
   @ConfigValue('auth.wellKnown.jwksUri')
-  private jwksUri: string;
+  private readonly jwksUri!: string;
 
-  private options: VerifyOptions;
-
-  private client;
+  private readonly options: VerifyOptions;
+  private readonly client: JwksClient;
 
   constructor() {
     this.options = {
       audience: this.audience,
       issuer: this.issuer,
     };
-    this.client = jwksclient({
-      jwksUri: this.jwksUri,
-    });
+    this.client = jwksClient({ jwksUri: this.jwksUri });
   }
 
-  private getkey(header, callback) {
-    this.client.getSigningKey(header.kid, function (err, key) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const signingKey = key.getPublicKey() || key.getRsaPublicKey();
-      callback(null, signingKey);
-    });
-  }
+  private readonly getKey: GetPublicKeyOrSecret = (
+    header: JwtHeader,
+    callback: SigningKeyCallback,
+  ): void => {
+    if (!header.kid) {
+      callback(new Error('JWT header does not contain a key ID'));
+      return;
+    }
 
-  public async verify(token: string) {
-    return new Promise((reject, resolve) => {
-      jwt.verify(token, this.getkey, this.options, (error, decoded) => {
+    this.client.getSigningKey(header.kid, (error, key) => {
+      if (error || !key) {
+        callback(error ?? new Error('Unable to retrieve the signing key'));
+        return;
+      }
+      callback(null, key.getPublicKey());
+    });
+  };
+
+  public async verify(token: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      jwt.verify(token, this.getKey, this.options, (error, decoded) => {
         if (error) {
           reject(error);
-        } else if (decoded) {
-          resolve(true);
+        } else {
+          resolve(decoded !== undefined);
         }
       });
     });

@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import * as expressWinston from 'express-winston';
 import * as winston from 'winston';
 import { RoutesBuilder } from '../router/routes';

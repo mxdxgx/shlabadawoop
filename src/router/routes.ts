@@ -8,11 +8,12 @@ export class RoutesBuilder {
 
   public buildRoutes() {
     for (const route of RESOURCES_ROUTES) {
+      const middlewares = route.routeParams.middlewares ?? [];
       this.router[route.method](
         route.routeParams.route,
         configs.auth.activated
-          ? route.routeParams.middlewares.concat(jwtValidatorMiddleware)
-          : route.routeParams.middlewares,
+          ? middlewares.concat(jwtValidatorMiddleware)
+          : middlewares,
         route.routeParams.handler,
       );
     }
