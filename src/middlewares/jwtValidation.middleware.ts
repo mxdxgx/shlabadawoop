@@ -6,7 +6,8 @@ export async function jwtValidatorMiddleware(
   res: express.Response,
   next: express.NextFunction,
 ) {
-  if (await jwtService.verify(req.get('Authorization'))) {
+  const authorization = req.get('Authorization');
+  if (authorization && (await jwtService.verify(authorization))) {
     next();
   } else {
     throw new Error('Unauthorized');
