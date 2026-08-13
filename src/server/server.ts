@@ -5,26 +5,17 @@ import { RoutesBuilder } from '../router/routes';
 
 import 'reflect-metadata';
 
-/**
- * create & configure server
- */
 export async function createDefaultApp(): Promise<express.Application> {
-  const app: express.Application = express();
-  const routes: RoutesBuilder = new RoutesBuilder();
+  const app = express();
+  const routes = new RoutesBuilder();
   routes.buildRoutes();
   app.use(routes.router);
-
-  /**
-   * configure error logger
-   */
   app.use(
     expressWinston.errorLogger({
       transports: [
         new winston.transports.Console({ level: 'silly' }),
         new winston.transports.File({
-          filename: `${
-            new Date().toISOString().split('T')[0]
-          }.shlabadawoop.ERR.log`,
+          filename: `${new Date().toISOString().split('T')[0]}.shlabadawoop.ERR.log`,
           level: 'debug',
           dirname: 'logs',
         }),
@@ -38,16 +29,4 @@ export async function createDefaultApp(): Promise<express.Application> {
   return app;
 }
 
-/**
- * create global logger
- */
-export const logger = winston.createLogger({
-  transports: [
-    new winston.transports.Console({ level: 'debug' }),
-    new winston.transports.File({
-      filename: `${new Date().toISOString().split('T')[0]}.shlabadawoop.log`,
-      level: 'debug',
-      dirname: 'logs',
-    }),
-  ],
-});
+export { logger } from './logger';

@@ -1,20 +1,21 @@
-import * as express from 'express';
-import { logger } from '../server/server';
-import { ConfigValue } from '../../config/decorators/configvalue.decorator';
-import autobind from '../../config/decorators/autobind.decorator';
+import type { Request, Response } from 'express';
+import { configs } from '../../config/configs';
+import { logger } from '../server/logger';
 
-@autobind
 export class BaseController {
-  @ConfigValue('api')
-  private readonly api: any;
+  constructor(
+    private readonly api: unknown = configs.api,
+    private readonly now: () => Date = () => new Date(),
+  ) {}
 
-  public async getAll(
-    req: express.Request,
-    res: express.Response,
-  ): Promise<void> {
-    logger.info(`${new Date()}`);
-    res.status(200).send({ timestamp: new Date(), api: this.api });
-  }
+  public readonly getAll = async (
+    _req: Request,
+    res: Response,
+  ): Promise<void> => {
+    const timestamp = this.now();
+    logger.info(timestamp.toISOString());
+    res.status(200).send({ timestamp, api: this.api });
+  };
 }
 
-export const baseController: BaseController = new BaseController();
+export const baseController = new BaseController();

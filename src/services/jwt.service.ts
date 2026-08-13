@@ -5,27 +5,25 @@ import jwt, {
   type VerifyOptions,
 } from 'jsonwebtoken';
 import jwksClient, { type JwksClient } from 'jwks-rsa';
-import { ConfigValue } from '../../config/decorators/configvalue.decorator';
+import { configs } from '../../config/configs';
+
+export type TokenVerifier = typeof jwt.verify;
 
 export class JwtService {
-  @ConfigValue('auth.validate.audience')
-  private readonly audience!: string;
-
-  @ConfigValue('auth.validate.issuer')
-  private readonly issuer!: string;
-
-  @ConfigValue('auth.wellKnown.jwksUri')
-  private readonly jwksUri!: string;
-
   private readonly options: VerifyOptions;
   private readonly client: JwksClient;
 
-  constructor() {
+  constructor(
+    client: JwksClient = jwksClient({
+      jwksUri: configs.auth.wellKnown.jwksUri,
+    }),
+    private readonly tokenVerifier: TokenVerifier = jwt.verify,
+  ) {
+    this.client = client;
     this.options = {
-      audience: this.audience,
-      issuer: this.issuer,
+      audience: configs.auth.validate.audience,
+      issuer: configs.auth.validate.issuer,
     };
-    this.client = jwksClient({ jwksUri: this.jwksUri });
   }
 
   private readonly getKey: GetPublicKeyOrSecret = (
@@ -36,7 +34,6 @@ export class JwtService {
       callback(new Error('JWT header does not contain a key ID'));
       return;
     }
-
     this.client.getSigningKey(header.kid, (error, key) => {
       if (error || !key) {
         callback(error ?? new Error('Unable to retrieve the signing key'));
@@ -46,17 +43,17 @@ export class JwtService {
     });
   };
 
-  public async verify(token: string): Promise<boolean> {
+  public verify(token: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      jwt.verify(token, this.getKey, this.options, (error, decoded) => {
+      this.tokenVerifier(token, this.getKey, this.options, (error, decoded) => {
         if (error) {
           reject(error);
-        } else {
-          resolve(decoded !== undefined);
+          return;
         }
+        resolve(decoded !== undefined);
       });
     });
   }
 }
 
-export const jwtService: JwtService = new JwtService();
+export const jwtService = new JwtService();

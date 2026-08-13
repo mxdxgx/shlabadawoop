@@ -1,62 +1,46 @@
-import * as config from 'config';
-import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import { IAuthToken } from '../src/models/authToken.model';
-import * as path from 'path';
+import config from 'config';
+import path from 'node:path';
+import type { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import type { IAuthToken } from '../src/models/authToken.model';
 import { PrintUtils } from '../src/utils/printUtils';
 
 export class Configuration {
   private readonly apiVersion: string;
-
   private readonly ormConfig: PostgresConnectionOptions;
-
   public readonly auth: IAuthToken;
 
-  constructor() {
-    this.apiVersion = <string>config.get('api.version');
-    this.ormConfig = <PostgresConnectionOptions>config.get('typeorm');
-
+  constructor(private readonly log: (message: string) => void = console.log) {
+    this.apiVersion = config.get<string>('api.version');
+    this.ormConfig = config.get<PostgresConnectionOptions>('typeorm');
     this.auth = {
-      activated: <boolean>config.get('auth.activated'),
+      activated: config.get<boolean>('auth.activated'),
       validate: {
-        issuer: <string>config.get('auth.validate.issuer'),
-        audience: <string>config.get('auth.validate.audience'),
+        issuer: config.get<string>('auth.validate.issuer'),
+        audience: config.get<string>('auth.validate.audience'),
       },
       wellKnown: {
-        jwksUri: <string>config.get('auth.wellKnown.jwksUri'),
+        jwksUri: config.get<string>('auth.wellKnown.jwksUri'),
       },
     };
-
     this.printConfigFilesInOrder();
   }
 
-  get api(): unknown {
-    return {
-      version: this.apiVersion,
-    };
+  get api(): { version: string } {
+    return { version: this.apiVersion };
   }
 
   get typeOrm(): PostgresConnectionOptions {
     return this.ormConfig;
   }
 
-  /**
-   * @function printConfigFilesInOrder
-   * @private
-   * @return void
-   *
-   * Basic print function that formats the config filenames as they appear in loading order.
-   */
-  private printConfigFilesInOrder() {
-    console.log('Configuration files in order : ');
-    console.log('####################################################');
-
+  private printConfigFilesInOrder(): void {
+    this.log('Configuration files in order : ');
+    this.log('####################################################');
     for (const source of config.util.getConfigSources()) {
-      const boundary = PrintUtils.createBoundary(path.basename(source.name));
-      console.log(boundary);
+      this.log(PrintUtils.createBoundary(path.basename(source.name)));
     }
-
-    console.log('####################################################');
+    this.log('####################################################');
   }
 }
 
-export const configs: Configuration = new Configuration();
+export const configs = new Configuration();
